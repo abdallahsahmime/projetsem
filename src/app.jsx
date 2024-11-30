@@ -19,12 +19,13 @@ const App = () => {
   ];
 
   return (
+    <body className="app">
     <div className="App">
       
       
 
       
-      <div className="hero">
+      <div className="hero1">
         <h1>HUNGRY?</h1>
         <p>Feed your appetite for global flavors with us!</p>
       </div>
@@ -40,6 +41,7 @@ const App = () => {
         ))}
       </div>
     </div>
+    </body>
   );
 };
 

@@ -4,6 +4,7 @@ function Loginbutton() {
 
   const handleClick = () => {
     window.open("/login", "_self");
+    localStorage.setItem("signedin",String(false));
   };
 
   return (

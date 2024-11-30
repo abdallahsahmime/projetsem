@@ -17,7 +17,7 @@ const username = localStorage.getItem("users")
  
 function Header() {
   
-if ((signedin)=="false"){
+if ((signedin)==="false"){
 return ( <div>
     <header className="header">
         <img src="assets/logo.png" alt="Logo" className="logo" />

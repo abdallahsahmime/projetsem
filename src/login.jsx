@@ -4,7 +4,7 @@ import Loginbutton from'./loginbutton'
 import Registerbutton from "./registerbutton";
 import Home from "./home";
 
-localStorage.setItem("signedin",String(false));
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +24,7 @@ const Login = () => {
     );
 
     if (validUser) {
+      
       console.log("Login successful for user:", username);
       localStorage.setItem("signedin",String(true));
       window.open("/", "_self");
@@ -36,6 +37,7 @@ const Login = () => {
   };
 
   return (
+    <body className="login">
     <div className="wrapper">
       <form onSubmit={handleLogin}>
         <h1>Login</h1>
@@ -73,6 +75,7 @@ const Login = () => {
         </div>
       </form>
     </div>
+    </body>
   );
 };
 
