@@ -1,52 +1,65 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Register from "./register";
-import Login from "./login";
-import { useNavigate } from 'react-router-dom';
-import './app.css';
-import Loginbutton from'./loginbutton'
+import { useNavigate } from "react-router-dom";
+import "./app.css";
+import Loginbutton from "./loginbutton";
 import Registerbutton from "./registerbutton";
 import Logoutbutton from "./logoutbutton";
+import Allrecipiesbutton from "./allrecepiesbutton";
 
+const handleClick = () => {
+  window.open("/", "_self");
+};
 
-
-const signedin = localStorage.getItem("signedin") 
+const signedin = localStorage.getItem("signedin");
 console.log(signedin);
 
-const username = localStorage.getItem("users")
- 
+const username = localStorage.getItem("users");
+
 function Header() {
-  
-if ((signedin)==="false"){
-return ( <div>
-    <header className="header">
-        <img src="assets/logo.png" alt="Logo" className="logo" />
-        <input type="text" placeholder="search" className="search-input" />
-        
-        
-        <div>
-          <Loginbutton/>
-          <Registerbutton/>
-        </div> 
-       
-      </header> 
+  if (signedin === "false") {
+    return (
+      <div>
+        <header className="header">
+          <a onClick={handleClick}>
+            <img src="assets/logo.png" alt="Logo" className="logo" />
+          </a>
+         
+          <input
+            type="text"
+            placeholder="Search"
+            className="search-input"
+          />
+          
+          <div className="auth-buttons">
+          <Allrecipiesbutton />
+            <Loginbutton />
+            <Registerbutton />
+          </div>
+        </header>
       </div>
-)
-}
-else {
-  return ( <div>
-    <header className="header">
-        <img src="assets/logo.png" alt="Logo" className="logo" />
-        <input type="text" placeholder="search" className="search-input" />
-        <div>
-        hello, welcome again
-        <Logoutbutton />
-        </div>
-        
-       
-      </header> 
+    );
+  } else {
+    return (
+      <div>
+        <header className="header">
+          <a onClick={handleClick}>
+            <img src="assets/logo.png" alt="Logo" className="logo" />
+          </a>
+          
+          <input
+            type="text"
+            placeholder="Search"
+            className="search-input"
+          />
+          <div className="auth-buttons">
+            <span>Hello, welcome again</span>
+            <Allrecipiesbutton />
+            <Logoutbutton />
+          </div>
+        </header>
       </div>
-)
+    );
+  }
 }
-}
+
 export default Header;

@@ -13,7 +13,7 @@ const Korea = () => {
 
   return (
     <div className="food">
-      <Header />
+      
       <div className="hero"></div>
       <div className="grid">
         {cardData.map((card, index) => (

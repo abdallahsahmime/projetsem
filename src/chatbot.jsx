@@ -12,8 +12,8 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const chatWindowRef = useRef(null);
 
-  const API_ID = "2924ba02"; 
-  const API_KEY = "5bddcb2069c125bfb9efe35124827718"; //  Edamam API Key
+  const API_ID = "2924ba02";
+  const API_KEY = "5bddcb2069c125bfb9efe35124827718"; // Edamam API Key
 
   useEffect(() => {
     localStorage.setItem("recipes", JSON.stringify(recipes));
@@ -42,6 +42,74 @@ const Chatbot = () => {
     setInput("");
     setIsTyping(true);
 
+    // Check for calorie range and genre in user input
+    const calorieRegex = /between (\d+)\s*and\s*(\d+)\s*calories/i;
+    const genreRegex = /genre (\w+)/i;
+    const calorieMatch = input.match(calorieRegex);
+    const genreMatch = input.match(genreRegex);
+
+    if (calorieMatch || genreMatch) {
+      const minCalories = calorieMatch ? calorieMatch[1] : null;
+      const maxCalories = calorieMatch ? calorieMatch[2] : null;
+      const genre = genreMatch ? genreMatch[1] : null;
+
+      setIsLoading(true);
+
+      let query = "";
+      if (genre) {
+        query += genre;
+      }
+
+      try {
+        const url = `https://api.edamam.com/search?q=${query}&app_id=${API_ID}&app_key=${API_KEY}`;
+        const calorieFilter = minCalories && maxCalories ? `&calories=${minCalories}-${maxCalories}` : "";
+
+        const response = await axios.get(`${url}${calorieFilter}`);
+
+        setIsTyping(false);
+        setIsLoading(false);
+
+        const foundRecipes = response.data.hits.map((hit) => ({
+          label: hit.recipe.label,
+          ingredientLines: hit.recipe.ingredientLines,
+          calories: hit.recipe.calories,
+          healthLabels: hit.recipe.healthLabels,
+        }));
+
+        if (foundRecipes.length === 0) {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: "bot", text: `Sorry, I couldn't find any recipes${genre ? ` for genre ${genre}` : ""}${calorieMatch ? ` with calories between ${minCalories} and ${maxCalories}` : ""}.` },
+          ]);
+          return;
+        }
+
+        setRecipes(foundRecipes);
+
+        const recipesList = foundRecipes
+          .map((recipe) => recipe.label)
+          .join(", ");
+
+        const botMessage = {
+          sender: "bot",
+          text: `Here are some recipes${genre ? ` for genre ${genre}` : ""}${calorieMatch ? ` with calories between ${minCalories} and ${maxCalories}` : ""}: ${recipesList}. You can ask for ingredients by typing "Recipe for [recipe name]".`,
+        };
+
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+        setIsTyping(false);
+        setIsLoading(false);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: "bot", text: "Oops! Something went wrong. Please try again." },
+        ]);
+      }
+
+      return;
+    }
+
+    // Check for specific recipe request
     if (input.toLowerCase().startsWith("recipe for")) {
       const recipeName = input.replace(/^recipe for/i, "").trim().toLowerCase();
       const selectedRecipe = recipes.find(
@@ -71,11 +139,11 @@ const Chatbot = () => {
       return;
     }
 
+    // Default behavior if no calorie range or specific recipe is detected
     setIsLoading(true);
-
     try {
       const response = await axios.get(
-        `https://api.edamam.com/search?q=${input}&app_id=${API_ID}&app_key=${API_KEY}&from=0&to=3&calories=591-722&health=alcohol-free`
+        `https://api.edamam.com/search?q=${input}&app_id=${API_ID}&app_key=${API_KEY}&from=0&to=3&health=alcohol-free`
       );
 
       setIsTyping(false);
@@ -176,7 +244,8 @@ const Chatbot = () => {
             style={{
               flex: 1,
               overflowY: "auto",
-              padding: "10px",
+              padding: "10",
+
               backgroundColor: "#fff",
             }}
           >

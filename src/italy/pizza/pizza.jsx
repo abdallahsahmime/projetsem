@@ -16,8 +16,9 @@ const Pizza = () => {
 
   return (
     <body className="pizza">
-    <div className="recipe-page-pizza">
       <Header />
+    <div className="recipe-page-pizza">
+      
       <div className="recipe-hero">
         <h1>Pasta Primavera</h1>
         <p>A classic Italian dish that brings freshness and flavor to your table.</p>

@@ -14,7 +14,7 @@ const Italy = () => {
   return (
     <body className="italy">
     <div className="food">
-      <Header />
+      <Header/>
       <div className="hero"></div>
       <div className="grid">
         {cardData.map((card, index) => (

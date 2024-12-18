@@ -12,7 +12,7 @@ function Logoutbutton() {
     <div style={{ textAlign: "center", marginTop: "20px" }}>
       <button 
         onClick={handleClick} 
-        style={{ padding: "5px 20px", fontSize: "16px", cursor: "pointer" }}
+        style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}
       >
         logout
       </button>

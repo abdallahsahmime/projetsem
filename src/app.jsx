@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "./header";
-import "./app.css"; 
+import "./app.css";
+import Italy from "./italy/italy"; 
 
 const App = () => {
   const cardData = [
     { src: "assets/tounes.png", alt: "Chef with Tunisian flag", link: "#" },
     { src: "assets/south africa.png", alt: "Chef with South African flag", link: "#" },
     { src: "assets/masr.png", alt: "Chef with Egyptian flag", link: "#" },
-    { src: "assets/italy.png", alt: "Chef with Italian flag", link: "#" },
+    { src: "assets/italy.png", alt: "Chef with Italian flag", link: "/italy" },
     { src: "assets/turkia.png", alt: "Chef with Turkish flag", link: "#" },
     { src: "assets/greece.png", alt: "Chef with Greek flag", link: "#" },
     { src: "assets/mexico.png", alt: "Chef with Mexican flag", link: "#" },
@@ -15,7 +16,7 @@ const App = () => {
     { src: "assets/brazil.png", alt: "Chef with Brazilian flag", link: "#" },
     { src: "assets/pelastine.png", alt: "Chef with Palestinian flag", link: "#" },
     { src: "assets/china.png", alt: "Chef with Chinese flag", link: "#" },
-    { src: "assets/korea.png", alt: "Chef with Korean flag", link: "#" },
+    { src: "assets/korea.png", alt: "Chef with Korean flag", link: "/korea" },
   ];
 
   return (

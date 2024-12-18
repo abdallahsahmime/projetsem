@@ -7,7 +7,7 @@ function Registerbutton() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "10px" }}>
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
       
       <button 
         onClick={handleClick} 
